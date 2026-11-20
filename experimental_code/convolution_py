@@ -1,0 +1,43 @@
+import torch
+import torch.nn as nn
+import matplotlib.pyplot as plt
+
+from image_loading import load_image
+
+# 1. Load an image
+image_array = load_image(12)
+
+# 2. Convert it to a normalized tensor
+image_tensor = torch.from_numpy(image_array.copy()).float() / 255.0
+
+# 3. Add channel and batch dimensions
+image_tensor = image_tensor.unsqueeze(0).unsqueeze(0)
+
+# 4. Create a convolutional layer
+conv = nn.Conv2d(
+    in_channels=1,
+    out_channels=4,
+    kernel_size=3,
+    padding=1
+)
+
+# 5. Apply the convolution
+with torch.no_grad():
+    output = conv(image_tensor)
+
+print("Input shape:", image_tensor.shape)
+print("Output shape:", output.shape)
+
+# 6. Visualize the original image and one feature map
+fig, axes = plt.subplots(1, 2, figsize=(8, 4))
+
+axes[0].imshow(image_array, cmap="gray")
+axes[0].set_title("Original galaxy")
+
+axes[1].imshow(output[0, 0].numpy(), cmap="gray")
+axes[1].set_title("Convolution output")
+
+for ax in axes:
+    ax.axis("off")
+
+plt.show()
