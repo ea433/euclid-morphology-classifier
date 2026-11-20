@@ -1,17 +1,18 @@
 from pathlib import Path
 import pandas as pd
 
-# Paths
-CSV_PATH = Path(r"C:\Euclid_Data\morphology_catalogue.csv")
+PROJECT_ROOT = (Path(__file__).resolve().parent.parent)
+DATA_DIR = PROJECT_ROOT / "data" 
 
-# Change this to the folder where you extracted the TAR
-IMAGE_ROOT = Path(
-    r"c:\Euclid_Data\extract_cutouts_jpg_gz_arcsinh_vis_only.tar"
-)
+CSV_PATH = DATA_DIR / "morphology_catalogue.csv"
+#IMAGE_ROOT = DATA_DIR / "cutouts_jpg_gz_arcsinh_vis_only.tar" 
+IMAGE_ROOT = DATA_DIR / "images"
+
 
 def prep_dataset():
 # Load a small sample
-    df = pd.read_csv(CSV_PATH, nrows=1000)
+    df = pd.read_csv(CSV_PATH, nrows=10000)
+    df.columns = df.columns.str.strip()
 
     def get_image_path(row):
         tile = str(row["tile_index"])

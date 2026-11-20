@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader, random_split
 from prepare_dataset import prep_dataset
 from galaxy_dataset import GalaxyDataset
 from galaxy_model import create_model
-USE_PRETRAINED = True # false for my own CNN
+USE_PRETRAINED = True # false for own CNN
 
 
 def train_model():
@@ -55,7 +55,6 @@ def train_model():
 
     images, labels = next(iter(train_loader))
     print("Batch image shape:", images.shape)
-    return
 
     # Step 4: Initialize the CNN
     model = create_model(use_pretrained=USE_PRETRAINED)
